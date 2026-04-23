@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Water Pipeline Issues</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0077b6;
+      --dark: #023e8a;
+      --light: #f4f6f8;
+      --white: #ffffff;
+      --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      background-color: var(--light);
+      overflow-x: hidden;
+      color: #333;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      margin-bottom: 10px;
+      font-size: 2.4rem;
+    }
+
+    nav {
+      background-color: var(--dark);
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+
+    nav a {
+      color: white;
+      margin: 0 18px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce6ff;
+      text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    .box {
+      background: var(--white);
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transform: translateY(0);
+      transition: transform 0.2s ease;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+    }
+
+    .box h2 {
+      margin-bottom: 15px;
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 5px;
+      display: inline-block;
+    }
+
+    .box ul {
+      list-style: inside;
+      margin-left: 10px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(2, 62, 138, 0.3);
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #005a90;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    /* Login / Personal Details Form */
+    .login-box {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .login-box h2 {
+      margin-bottom: 15px;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+    }
+
+    .form-group button {
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+    }
+
+    .form-group button:hover {
+      background-color: #005a90;
+      transform: scale(1.03);
+    }
+
+    /* Live Camera */
+    .camera-box {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 15px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    #video {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #000;
+    }
+
+    #capture-btn,
+    #upload-btn {
+      margin-top: 12px;
+      padding: 10px 16px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    #capture-btn:hover,
+    #upload-btn:hover {
+      background-color: #005a90;
+    }
+
+    #captured-image {
+      margin-top: 10px;
+      width: 100%;
+      max-height: 250px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    /* Add smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .box {
+        margin: 15px;
+        padding: 20px;
+      }
+
+      nav a {
+        margin: 0 10px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1 class="fade-in-up">Issues Due to Ageing Water Pipelines</h1>
+  <p class="fade-in-up" style="opacity: 0.9; margin-top: 10px;">
+    Understanding water supply problems and improving solutions
+  </p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#problems">Problems</a>
+  <a href="#survey">Survey</a>
+  <a href="#login">Login / Details</a>
+  <a href="#camera">Live Camera</a>
+  <a href="#complaint">Complaint</a>
+  <a href="#solutions">Solutions</a>
+</nav>
+
+<section id="home">
+  <div class="box fade-in-up">
+    <h2>About</h2>
+    <p>
+      Many areas face water supply issues due to ageing pipelines. 
+      These problems include delays, leakage, low pressure, and dirty water. 
+      By collecting data and complaints, we aim to improve water supply quality and reliability.
+    </p>
+  </div>
+</section>
+
+<section id="problems">
+  <div class="box fade-in-up">
+    <h2>Common Problems</h2>
+    <ul>
+      <li>Low water pressure</li>
+      <li>Delayed water supply</li>
+      <li>Dirty or muddy water</li>
+      <li>Leakage and wastage</li>
+      <li>Frequent pipe bursts</li>
+      <li>Water contamination and bad smell</li>
+      <li>Inconvenience in daily life (cooking, cleaning, bathing)</li>
+    </ul>
+  </div>
+</section>
+
+<section id="survey">
+  <div class="box fade-in-up">
+    <h2>Participate in Survey</h2>
+    <p>
+      Help us understand the issue better by filling this form.  
+      Your responses will be used to analyze and suggest improvements for your area.
+    </p>
+
+    <!-- ✅ Google Form Link Added -->
+    <a href="https://forms.gle/MeyALx4ZTJE5d9FM8" target="_blank" class="btn">
+      Fill Survey
+    </a>
+  </div>
+</section>
+
+<!-- 🔏 Login / Personal Details Section -->
+<section id="login">
+  <div class="login-box fade-in-up">
+    <h2>Personal Details (Area Contact Person)</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="area">Area / Locality</label>
+        <input type="text" id="area" placeholder="Enter your area or locality" required />
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact Number</label>
+        <input type="tel" id="contact" placeholder="Enter your mobile number" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email (optional)</label>
+        <input type="email" id="email" placeholder="Enter your email" />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Your Role</label>
+        <select id="role" required>
+          <option value="">Select role</option>
+          <option value="resident">Resident</option>
+          <option value="waterofficer">Water Officer</option>
+          <option value="councilor">Local Councilor</option>
+          <option value="agency">Municipal Staff</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Full Address (optional)</label>
+        <textarea id="address" placeholder="House No., Street, Landmark..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Submit Details</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 📷 Live Camera Section -->
+<section id="camera">
+  <div class="camera-box fade-in-up">
+    <h2>Live Camera – Capture Water Leakage</h2>
+    <p>Use your device camera to capture an image of water leakage or damaged pipes.</p>
+
+    <video id="video" autoplay playsinline></video>
+
+    <div>
+      <button id="capture-btn" type="button">Capture Image</button>
+      <input type="file" id="upload-btn" accept="image/*" style="margin-left:10px;" />
+    </div>
+
+    <img id="captured-image" alt="Captured water leakage image" />
+
+    <p style="margin-top:10px; font-size:0.9rem; opacity:0.8;">
+      The captured image can be used as evidence for your complaint or survey.
+    </p>
+  </div>
+</section>
+
+<section id="complaint">
+  <div class="box fade-in-up">
+    <h2>How to File Complaint</h2>
+    <ul>
+      <li>Contact your local municipal office</li>
+      <li>Call water supply helpline</li>
+      <li>Use online complaint portal</li>
+      <li>Contact local representatives (councilor, MLA, etc.)</li>
+      <li>Share photos of leakage via our survey or Live Camera section</li>
+    </ul>
+  </div>
+</section>
+
+<section id="solutions">
+  <div class="box fade-in-up">
+    <h2>Suggested Solutions</h2>
+    <ul>
+      <li>Replace old pipelines with modern, durable materials</li>
+      <li>Regular maintenance and inspection of pipelines</li>
+      <li>Quick complaint resolution and tracking system</li>
+      <li>Better monitoring system (pressure sensors, leakage detection)</li>
+      <li>Public awareness and involvement via surveys and feedback</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Water Survey Project</p>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  // Personal Details Form
+  document.getElementById("login-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Thank you! Your details have been saved successfully.");
+    this.reset();
+  });
+
+  // Live Camera
+  const video = document.getElementById("video");
+  const captureBtn = document.getElementById("capture-btn");
+  const uploadBtn = document.getElementById("upload-btn");
+  const capturedImage = document.getElementById("captured-image");
+
+  // Start camera
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      video.srcObject = stream;
+    })
+    .catch((err) => {
+      console.error("Error accessing camera:", err);
+      alert("Camera not available. Please check permissions.");
+    });
+
+  // Capture image
+  captureBtn.addEventListener("click", () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    capturedImage.src = canvas.toDataURL("image/jpeg");
+    capturedImage.style.display = "block";
+  });
+
+  // Upload image
+  uploadBtn.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      capturedImage.src = reader.result;
+      capturedImage.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+
+</body>
+</html>
